@@ -8,7 +8,7 @@ class UniquePointer
 public:
 	UniquePointer(T* p) : _ptr(p) {}
 	~UniquePointer() { /*Add your code*/
-		
+		delete _ptr;
 	}
 	UniquePointer(const UniquePointer<T> & p) = delete;//Disable copy constructor
 	const UniquePointer<T>& operator = (const UniquePointer<T>& p) = delete;//disable = operator
@@ -21,9 +21,10 @@ public:
 
 
 	const T& operator *() const 
-	{ 
+	{
+		//CODE ADDED 
 		if(nullptr != _ptr)
-			return /*Code Added*/ *_ptr;
+			return *_ptr;
 
 		return NULL;
 	}
@@ -86,7 +87,7 @@ public:
 		decrementRef();
 		_counter = p._counter;
 		_ptr = p._ptr;
-		_counter->incUse;
+		_counter->incUse();
 		return *this;
 	}
 	const T& get() { return *_ptr; }
@@ -100,9 +101,8 @@ private:
 	{
 		if (_counter == nullptr) 
 			return;
-
 		_counter->decUse();//Decrement the reference counter
-		if(_counter->getUse == 0)
+		if(_counter->getUse() == 0)
 			delete _ptr;
 	}
 
@@ -119,63 +119,63 @@ private:
 /*********************************************************************************/
 /******************************<WEAK POINTER>************************************/
 
-template <class T>
-class WeakPointer
-{
-public:
-	WeakPointer() : _shared(nullptr), _counter(nullptr) {}
+// template <class T>
+// class WeakPointer
+// {
+// public:
+// 	WeakPointer() : _shared(nullptr), _counter(nullptr) {}
 
-	WeakPointer(SharedPointer<T> &p) : _shared(&p), _counter(p._counter)
-	{
-		/*Add your code*/
-	}
+// 	WeakPointer(SharedPointer<T> &p) : _shared(&p), _counter(p._counter)
+// 	{
+// 		/*Add your code*/
+// 	}
 
-	~WeakPointer()
-	{
-		decrementRef();
-	}
+// 	~WeakPointer()
+// 	{
+// 		decrementRef();
+// 	}
 
-	WeakPointer(const WeakPointer<T> &wp)
-	{
-		_counter = nullptr;
-		*this = wp;
-	}
+// 	WeakPointer(const WeakPointer<T> &wp)
+// 	{
+// 		_counter = nullptr;
+// 		*this = wp;
+// 	}
 
-	const WeakPointer<T>& operator = (const WeakPointer<T> &WeakPointer)
-	{
-		decrementRef();
-		_counter = WeakPointer._counter;
-		_shared = WeakPointer._shared;
-		_counter->incWeak();
-		return *this;
-	}
+// 	const WeakPointer<T>& operator = (const WeakPointer<T> &WeakPointer)
+// 	{
+// 		decrementRef();
+// 		_counter = WeakPointer._counter;
+// 		_shared = WeakPointer._shared;
+// 		_counter->incWeak();
+// 		return *this;
+// 	}
 
-	bool expired() const { return _counter->getUse() == 0; }
+// 	bool expired() const { return _counter->getUse() == 0; }
 
-	T *operator -> () const
-	{
-		if (/*Add your code*/)
-			throw "Pointer is not longer valid.";
-		return _shared->get();
-	}
+// 	T *operator -> () const
+// 	{
+// 		if (/*Add your code*/)
+// 			throw "Pointer is not longer valid.";
+// 		return _shared->get();
+// 	}
 
-	const T& operator * () const
-	{
-		if (/*Add your code*/)
-			throw "Pointer is not longer valid.";
-		return _shared->get();
-	}
+// 	const T& operator * () const
+// 	{
+// 		if (/*Add your code*/)
+// 			throw "Pointer is not longer valid.";
+// 		return _shared->get();
+// 	}
 
-private:
-	void decrementRef(void)
-	{
-		if (_counter == nullptr)
-			return;
+// private:
+// 	void decrementRef(void)
+// 	{
+// 		if (_counter == nullptr)
+// 			return;
 
-		/*Add your code*/
-	}
+// 		/*Add your code*/
+// 	}
 
-private:
-	SharedPointer<T> *_shared;
-	Counter *_counter;
-};
+// private:
+// 	SharedPointer<T> *_shared;
+// 	Counter *_counter;
+// };

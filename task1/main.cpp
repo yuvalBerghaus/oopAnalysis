@@ -25,24 +25,24 @@ int main()
 
 
 	///*********SHARED POINTER*************/
-	//{
-	//	std::shared_ptr<int> s1(new int(6));
-	//	std::shared_ptr<int> s2(s1);
-	//	std::shared_ptr<int> s3 = s2;
+	// {
+	// 	std::shared_ptr<int> s1(new int(6));
+	// 	std::shared_ptr<int> s2(s1);
+	// 	std::shared_ptr<int> s3 = s2;
 
-	//	if (nullptr != s1)
-	//		cout << "s1 = " << *s1 << endl;
+	// 	if (nullptr != s1)
+	// 		cout << "s1 = " << *s1 << endl;
 
-	//	if (nullptr != s2)
-	//		cout << "s2 = " << *s2 << endl;
+	// 	if (nullptr != s2)
+	// 		cout << "s2 = " << *s2 << endl;
 
-	//	if (nullptr != s3)
-	//		cout << "s3 = " << *s3 << endl;
+	// 	if (nullptr != s3)
+	// 		cout << "s3 = " << *s3 << endl;
 
-	//	{
-	//		std::shared_ptr<int> s4 = s3;
-	//	}
-	//}
+	// 	{
+	// 		std::shared_ptr<int> s4 = s3;
+	// 	}
+	// }
 
 
 	///*********WEAK POINTER********************/
@@ -85,10 +85,10 @@ int main()
 	/*********OUR IMPLEMENTATION*************/
 	UniquePointer<int> up(new int(10));
 
-	UniquePointer<int> up1(std::move(up));
+	//UniquePointer<int> up1(std::move(up));
 
 	cout << "The Value of up is: " << *up << endl;
-	cout << "The Value of up1 is: " << *up1 << endl;
+	//cout << "The Value of up1 is: " << *up1 << endl;
 
 // 	SharedPointer<int> sp(new int(10));
 // 	WeakPointer<int> wp(sp);
@@ -104,6 +104,6 @@ int main()
 // 	}
 
 // 	std::cout << "Address is " << *(wp) << std::endl;
-// }
+}
 
 
