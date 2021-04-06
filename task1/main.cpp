@@ -85,10 +85,10 @@ int main()
 	/*********OUR IMPLEMENTATION*************/
 	UniquePointer<int> up(new int(10));
 
-	//UniquePointer<int> up1(std::move(up));
+	UniquePointer<int> up1(std::move(up));
 
-	cout << "The Value of up is: " << *up << endl;
-	//cout << "The Value of up1 is: " << *up1 << endl;
+	//cout << "The Value of up is: " << *up << endl;
+	cout << "The Value of up1 is: " << *up1 << endl;
 
 // 	SharedPointer<int> sp(new int(10));
 // 	WeakPointer<int> wp(sp);
