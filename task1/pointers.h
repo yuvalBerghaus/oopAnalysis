@@ -38,7 +38,7 @@ public:
 	}
 
 private:
-	/*Add your code*/
+	/*CODE ADDED*/
 	T *_ptr;
 };
 
@@ -116,8 +116,9 @@ private:
 	T *operator->() const { return _ptr; }
 
 private:
+/*CODE ADDED*/
 	T *_ptr;
-	/*CODE ADDED*/ Counter *_counter;
+	Counter *_counter;
 };
 
 /*********************************************************************************/
@@ -131,7 +132,8 @@ public:
 
 	WeakPointer(SharedPointer<T> &p) : _shared(&p), _counter(p._counter)
 	{
-		/*Add your code*/
+		/*CODE ADDED*/
+		_counter->incWeak();
 	}
 
 	~WeakPointer()
@@ -158,14 +160,14 @@ public:
 
 	T *operator->() const
 	{
-		if (/*Add your code*/)
+		if (/*CODE ADDED*/ expired())
 			throw "Pointer is not longer valid.";
 		return _shared->get();
 	}
 
 	const T &operator*() const
 	{
-		if (/*Add your code*/)
+		if (expired())
 			throw "Pointer is not longer valid.";
 		return _shared->get();
 	}
@@ -177,8 +179,9 @@ private:
 		if (_counter == nullptr)
 			return;
 		_counter->decWeak();
-		if (expired())
+		if (expired() && _counter->getWeak() == 0) {
 			delete _counter;
+		}
 	}
 
 private:
