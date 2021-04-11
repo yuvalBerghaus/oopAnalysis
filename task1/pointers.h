@@ -1,5 +1,8 @@
 #pragma once
-
+#include <map>
+#include <exception>
+#include <iostream>
+#include <memory>
 /*********************************************************************************/
 /*****************************<UNIQUE POINTER>************************************/
 template <class T>
@@ -25,10 +28,8 @@ public:
 		//CODE ADDED
 		if (nullptr != _ptr)
 			return *_ptr;
-
 		return NULL;
 	}
-
 	T *operator->() const
 	{
 		if (nullptr != _ptr)
@@ -103,7 +104,7 @@ private:
 	{
 		if (_counter == nullptr)
 			return;
-		_counter->decUse();		//Decrement the reference counter
+		_counter->decUse();			 //Decrement the reference counter
 		if (_counter->getUse() == 0) // we need to check also that weak counter is 0 because as shared ptr we are not allowed to delete the ptr as long as the weak count and the use count is not 0
 		{
 			delete _ptr;
@@ -116,7 +117,7 @@ private:
 	T *operator->() const { return _ptr; }
 
 private:
-/*CODE ADDED*/
+	/*CODE ADDED*/
 	T *_ptr;
 	Counter *_counter;
 };
@@ -162,14 +163,14 @@ public:
 	{
 		if (/*CODE ADDED*/ expired())
 			throw "Pointer is not longer valid.";
-		return _shared->get();
+		return _shared;
 	}
 
 	const T &operator*() const
 	{
 		if (expired())
 			throw "Pointer is not longer valid.";
-		return _shared->get();
+		return **_shared;
 	}
 
 private:
@@ -179,7 +180,8 @@ private:
 		if (_counter == nullptr)
 			return;
 		_counter->decWeak();
-		if (expired() && _counter->getWeak() == 0) {
+		if (expired() && _counter->getWeak() == 0)
+		{
 			delete _counter;
 		}
 	}
@@ -187,4 +189,75 @@ private:
 private:
 	SharedPointer<T> *_shared;
 	Counter *_counter;
+};
+/*PART B*/
+
+template <class K, class V>
+class CacheMemory
+{
+public:
+	void add(const K &key, const V &value)
+	{
+		// not found
+		if (map1.find(key) == map1.end())
+		{
+			//SharedPointer<V> added(new V(value));
+			std::shared_ptr<V> added(new V(value));
+			map1[key] = added;
+		}
+		// found
+		else
+			throw "DuplicateKeyException";
+	}
+	void erase(const K &key)
+	{
+		if (map1.find(key) != map1.end())
+			map1.erase(key);
+		else
+			throw "ObjectNotExistException";
+	}
+	std::shared_ptr<V> get(const K &key)
+	{
+		try
+		{
+			//Check if value exists for the particular key
+			auto entry = mapCache.find(key);
+			if (entry != mapCache.end())
+			{
+				//key found
+				if (!mapCache[key].expired())
+				{
+					return mapCache[key].lock();
+				}
+			}
+			else if (map1.find(key) != map1.end())
+			{
+				//found in map1 the key
+				mapCache[key] = map1[key]; // we insert the value to mapCache
+				return map1[key];
+			}
+			else
+			{
+				std::cout << "Not found" << std::endl;
+				return nullptr;
+			}
+		}
+		catch (...)
+		{
+			mapCache.erase(key);
+		}
+	}
+
+private:
+	std::map<K, std::shared_ptr<V>>
+		map1;
+	std::map<K, std::weak_ptr<V>> mapCache;
+};
+
+class Employee
+{
+private:
+	char *id;
+	int salary;
+	int seniority;
 };
