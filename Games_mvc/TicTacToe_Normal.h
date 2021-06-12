@@ -4,7 +4,7 @@
 class TicTacToe_Normal : public TicTacToe
 {
 public:
-	TicTacToe_Normal(int difficult = 3, string state = "123456789");
+	TicTacToe_Normal(/*string state = "123456789"*/int sizeBoard) :TicTacToe(sizeBoard) {};
 
 	void playerMove();
 	void computerMove();

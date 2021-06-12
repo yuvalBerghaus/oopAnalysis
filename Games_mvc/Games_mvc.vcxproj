@@ -153,9 +153,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleView.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameModel.cpp" />
     <ClCompile Include="GUIview.cpp" />
+    <ClCompile Include="TicTacToe.cpp" />
     <ClCompile Include="TicTacToe_Hard.cpp" />
     <ClCompile Include="TicTacToe_Normal.cpp" />
   </ItemGroup>

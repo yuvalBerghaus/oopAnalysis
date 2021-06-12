@@ -12,7 +12,7 @@ class GameController : Controller
 public:
 	GameController(Model, View);
 	~GameController();
-	void play(int game_id);
+	void play(int game_id,int sizeBoard);
 	void displayEnrolledGames();
 	void addGame();
 	void removeGame();

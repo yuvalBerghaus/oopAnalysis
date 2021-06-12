@@ -1,8 +1,8 @@
 #include "GameController.h"
 
-void GameController::play(int game_id)
+void GameController::play(int game_id , int sizeBoard)
 {
-	Game* game = _Model->getGame(game_id); //factory
+	Game* game = _Model->getGame(game_id, sizeBoard); //factory
 
 	while (!game->checkWinner()) {
 		_View->printGameStatus(game);
@@ -12,4 +12,7 @@ void GameController::play(int game_id)
 		game->computerMove();
 	}
 	_View->printWinner(game->getWinner());
+}
+void GameController::getEnrolledGames() {
+
 }
